@@ -85,4 +85,3 @@ const generateSecondPokemon = () => {
 //Battle Button!
 let pokemon1 = pokeInfoArray1;
 let pokemon2 = pokeInfoArray2;
-
