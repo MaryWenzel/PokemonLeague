@@ -1,0 +1,22 @@
+{
+  "name": "pokemonleague",
+  "version": "1.0.0",
+  "description": "PokemonLeagueProject for ACA",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaryWenzel/PokemonLeague.git"
+  },
+  "author": "Mary Wenzel & Alex Alban",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaryWenzel/PokemonLeague/issues"
+  },
+  "homepage": "https://github.com/MaryWenzel/PokemonLeague#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0"
+  }
+}
