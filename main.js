@@ -161,5 +161,3 @@ const pokemonBattle = () => {
     }, 1000)
 
 }
-
-
