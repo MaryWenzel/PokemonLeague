@@ -124,12 +124,19 @@ const pokemonBattle = () => {
                     console.log('Super Effective!');
                     return true;
                 } else {
-                    console.log('ELse');
+                    console.log('Else');
                     console.log("Not Super Effective");
                     return false;
                 }
         }
     }
+
+    // //Damage Resistance Determiner
+    // const damageResistance = () => {
+    //     //Move values into an array for far easier comparison
+    //     let resistanceArray = poke1Type1Array
+    // }
+
     setTimeout(function() {
         const firstPlayer = document.getElementById('first-result');
         const secondPlayer = document.getElementById('second-result');
