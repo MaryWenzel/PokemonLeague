@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Goldman:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <title>Pokemon League</title>
 </head>
@@ -12,15 +16,19 @@
             Pokémon League
         </h1>
     </header>
-    <main>
-        <button id= "generate-pokemon" onclick="generatePokemon()">Generate First Pokemon!</button>
-        <section id="first-pokemon-section">
-        </section>
-        <button id= "generate-pokemon" onclick="generateSecondPokemon()">Generate Second Pokemon!</button>
-        <section id="second-pokemon-section">
-        </section>
+    <main class="main-container">
+       <div class="pokemon-1">
+            <button id= "generate-pokemon" onclick="generatePokemon()">Generate First Pokemon!</button>
+            <section id="first-pokemon-section"></section>
+        </div>
+        <div class="pokemon-2">
+            <button id= "generate-pokemon" onclick="generateSecondPokemon()">Generate Second Pokemon!</button>
+            <section id="second-pokemon-section">
+            </section>
+        </div>
         <section id="battle-section">
-            <button id="battle-button">Battle!</button>
+            <!-- <button id="battle-button">Battle!</button> -->
+            <img id="battle-image" src="./images/shout.png" alt="">
         </section>
     </main>
     <script src="main.js"></script>

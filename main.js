@@ -85,7 +85,3 @@ const generateSecondPokemon = () => {
 //Battle Button!
 let pokemon1 = pokeInfoArray1;
 let pokemon2 = pokeInfoArray2;
-<<<<<<< HEAD
-
-=======
->>>>>>> 636b8bf227a76e4d6035272ef57fdf6f77294a7f
