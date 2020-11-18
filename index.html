@@ -14,13 +14,15 @@
     </header>
     <main>
         <button id= "generate-pokemon" onclick="generatePokemon()">Generate First Pokemon!</button>
+        <section id="first-result"></section>
         <section id="first-pokemon-section">
         </section>
         <button id= "generate-pokemon" onclick="generateSecondPokemon()">Generate Second Pokemon!</button>
+        <section id= "second-result"></section>
         <section id="second-pokemon-section">
         </section>
         <section id="battle-section">
-            <button id="battle-button">Battle!</button>
+            <button id="battle-button" onclick="pokemonBattle()">Battle!</button>
         </section>
     </main>
     <script src="main.js"></script>
