@@ -12,21 +12,35 @@ let poke1Type2Array;
 let poke2Type1Array;
 let poke2Type2Array;
 
+//Where Pokedex Entries are populated
+let pokedexPortal;
+let pokedex1Array;
+let pokedex2Array;
 
 //To Load Pokemon List
 onload = function () {
     getPokemon(fetch);
+    getPokedex(fetch);
 };
 
 //Fetches the Pokemon from the API
 const getPokemon = (fetch) => {
-    fetch ('https://pokeapi.co/api/v2/pokemon?limit=386')
+    fetch ('https://pokeapi.co/api/v2/pokemon?limit=518')
     .then(response => response.json())
     .then(pokemon => arrayOfPokemon = pokemon)
     setTimeout(function() {
         console.log(arrayOfPokemon)
     }, 1000)
 };
+
+const getPokedex = () => {
+    fetch ('https://pokeapi.co/api/v2/pokedex/1/')
+    .then(response => response.json(fetch))
+    .then(pokedex => pokedexPortal = pokedex)
+    setTimeout(function() {
+        console.log(pokedexPortal)
+    }, 1000)
+}
 
 //Will Capitalize the Pokemon Names
 const capitalize = (s) => {
@@ -36,7 +50,14 @@ const capitalize = (s) => {
 
 //Generates First Pokemon
 const generatePokemon = () => {
-    let randomPokemonOne = arrayOfPokemon.results[Math.floor(Math.random() * 386)];
+    //Hide Previous Winner and Loser
+    document.getElementById("first-result").innerHTML = "";
+    document.getElementById("second-result").innerHTML = "";
+    //Hides Previous Pokedex Entries
+    let dexSection1 = document.getElementById("pokedex-1");
+    dexSection1.innerHTML = null;
+    //Generate Random Pokemon!
+    let randomPokemonOne = arrayOfPokemon.results[Math.floor(Math.random() * 518)];
     console.log(randomPokemonOne);
     console.log(randomPokemonOne.url);
     fetch (randomPokemonOne.url)
@@ -44,6 +65,7 @@ const generatePokemon = () => {
     .then(pokemon => pokeInfoArray1 = pokemon)
     setTimeout(function() {
         console.log(pokeInfoArray1)
+        console.log("Pokemon number is " + pokeInfoArray1.id);
     }, 1000)
     let firstPokemon = document.getElementById('first-pokemon-section');
     firstPokemon.innerHTML = null;
@@ -58,8 +80,35 @@ const generatePokemon = () => {
         firstPokemon.appendChild(img)
         li.appendChild(name)
         li.appendChild(ul)
-        li.appendChild(type1)
-        // const type2 = document.createTextNode(`${capitalize(pokeInfoArray1.types[1]["type"]["name"])}`)
+        ul.appendChild(type1)
+        if (pokeInfoArray1.types[1] !== undefined) {
+            const ul = document.createElement('ul');
+            const type2 = document.createTextNode(`${capitalize(pokeInfoArray1.types[1]["type"]["name"])}`)
+            li.append(type2)
+            ul.append(li)
+        };
+        //Generate Pokedex Entries!
+        let dexSection = document.getElementById("pokedex-1");
+        const button = document.createElement('button');
+        button.innerHTML = "Pokédex Entry"
+        const ul2 = document.createElement('ul');
+        dexSection.append(button)
+        button.addEventListener('click', () => {
+            dexSection.innerHTML = null;
+            let pokeNumberOne = pokeInfoArray1.id;
+            fetch (pokedexPortal["pokemon_entries"][pokeNumberOne-1]["pokemon_species"]["url"])
+            .then(response => response.json())
+            .then(pokemon => pokedex1Array = pokemon)
+            setTimeout(function() {
+                console.log(pokedex1Array)
+                const li = document.createElement('ul');
+                const text = document.createTextNode(`${pokedex1Array["flavor_text_entries"][0]["flavor_text"]}`)
+                dexSection.appendChild(text)
+                dexSection.appendChild(li);
+            }, 1000)
+        })
+
+
 
         firstPokemon.append(li)
     }, 1000)
@@ -67,7 +116,14 @@ const generatePokemon = () => {
 
 //Generates Second Pokemon
 const generateSecondPokemon = () => {
-    let randomPokemonTwo = arrayOfPokemon.results[Math.floor(Math.random() * 386)];
+    //Hide Previous Winner and Loser
+    document.getElementById("first-result").innerHTML = "";
+    document.getElementById("second-result").innerHTML = "";
+    //Hides Previous Pokedex Entries
+    // let dexSection2 = document.getElementById("pokedex-2");
+    // dexSection2.innerHTML = null;
+    //Generate Random Pokemon!
+    let randomPokemonTwo = arrayOfPokemon.results[Math.floor(Math.random() * 518)];
     console.log(randomPokemonTwo);
     console.log(randomPokemonTwo.url);
     fetch (randomPokemonTwo.url)
@@ -89,13 +145,44 @@ const generateSecondPokemon = () => {
         secondPokemon.appendChild(img)
         li.appendChild(name)
         li.appendChild(ul)
-        li.appendChild(type1)
+        ul.appendChild(type1)
+        if (pokeInfoArray2.types[1] !== undefined) {
+            const ul = document.createElement('ul');
+            const type2 = document.createTextNode(`${capitalize(pokeInfoArray2.types[1]["type"]["name"])}`)
+            li.append(type2)
+            ul.append(li)
+        };
+        //Generate Pokedex Entries!
+        // let dexSection = document.getElementById("pokedex-2");
+        // const button = document.createElement('button');
+        // button.innerHTML = "Pokédex Entry"
+        // const ul2 = document.createElement('ul');
+        // dexSection.append(button)
+        // button.addEventListener('click', () => {
+        //     dexSection.innerHTML = null;
+        //     let pokeNumberTwo = pokeInfoArray2.id;
+        //     fetch (pokedexPortal["pokemon_entries"][pokeNumberTwo-1]["pokemon_species"]["url"])
+        //     .then(response => response.json())
+        //     .then(pokemon => pokedex2Array = pokemon)
+        //     setTimeout(function() {
+        //         console.log(pokedex2Array)
+        //         const li = document.createElement('ul');
+        //         const text = document.createTextNode(`${pokedex1Array["flavor_text_entries"][0]["flavor_text"]}`)
+        //         dexSection.appendChild(text)
+        //         dexSection.appendChild(li);
+        //     }, 1000)
+        // })
+
         secondPokemon.append(li)
     }, 1000)
 };
 
-//Battle Button!
+//Battle Button! This is now a VS Image. Updating to hide button
+document.getElementById("battle-button").style.visibility = "hidden";
 const pokemonBattle = () => {
+    //Hide Previous Winner and Loser
+    document.getElementById("first-result").innerHTML = "";
+    document.getElementById("second-result").innerHTML = "";
     //Fetch Type 1 of Pokemon 1
     fetch (pokeInfoArray1.types[0].type.url)
     .then(response => response.json())
@@ -114,8 +201,6 @@ const pokemonBattle = () => {
     const doubleDamage = () => {
         //Move values into an array for far easier comparison
         let superArray = poke1Type1Array['damage_relations']['double_damage_to'].map(({ name }) => name);
-        console.log(superArray);
-
         if (poke1Type1Array['damage_relations']['double_damage_to'].length === 0) {
             console.log("Not Super Effective");
             console.log("theFirstOne");
@@ -132,11 +217,46 @@ const pokemonBattle = () => {
         }
     }
 
-    // //Damage Resistance Determiner
-    // const damageResistance = () => {
-    //     //Move values into an array for far easier comparison
-    //     let resistanceArray = poke1Type1Array
-    // }
+    //Damage Resistance Determiner
+    const damageResistance = () => {
+        //Move values into an array for far easier comparison
+        let resistanceArray = poke1Type1Array['damage_relations']['half_damage_from'].map(({ name }) => name);
+        if (poke1Type1Array['damage_relations']['half_damage_from'].length === 0) {
+            console.log("Not Resistant");
+            console.log("Not Resistant theFirstOne");
+            return false;
+        } else {
+                if (resistanceArray.includes(poke2Type1Array['name'])) {
+                    console.log('Resists!');
+                    return true;
+                } else {
+                    console.log('Not Resistant Else');
+                    console.log("Not Resistant");
+                    return false;
+                }
+        }
+    }
+
+    //Damage Immune Determiner
+    const damageImmune = () => {
+        //Move values into an array for far easier comparison
+        let immuneArray = poke1Type1Array['damage_relations']['no_damage_from'].map(({ name }) => name);
+        if (poke1Type1Array['damage_relations']['no_damage_from'].length === 0) {
+            console.log("Not Immune");
+            console.log("NI theFirstOne");
+            return false;
+        } else {
+                if (immuneArray.includes(poke2Type1Array['name'])) {
+                    console.log('Immune!');
+                    return true;
+                } else {
+                    console.log('NI Else');
+                    console.log("Not Immune");
+                    return false;
+                }
+        }
+    }
+
 
     setTimeout(function() {
         const firstPlayer = document.getElementById('first-result');
@@ -145,8 +265,24 @@ const pokemonBattle = () => {
         const bannerTwo = document.createElement('H1');
         const winner = document.createTextNode(` Winner! `);
         const loser = document.createTextNode(` Loser.`);
+
+        damageImmune();
         doubleDamage();
-        if (doubleDamage() === true) {
+        damageResistance();
+
+        if (damageImmune() === true) {
+            banner.appendChild(winner)
+            firstPlayer.append(banner);
+
+            bannerTwo.appendChild(loser)
+            secondPlayer.append(bannerTwo);
+        } else if (doubleDamage() === true) {
+            banner.appendChild(winner)
+            firstPlayer.append(banner);
+
+            bannerTwo.appendChild(loser)
+            secondPlayer.append(bannerTwo);
+        } else if (damageResistance() === true) {
             banner.appendChild(winner)
             firstPlayer.append(banner);
 
@@ -159,7 +295,33 @@ const pokemonBattle = () => {
             banner.appendChild(loser)
             firstPlayer.append(banner);
         }
+
     }, 1000)
+
+    // setTimeout(function() {
+    //     const firstPlayer = document.getElementById('first-result');
+    //     const secondPlayer = document.getElementById('second-result');
+    //     const banner = document.createElement('H1');
+    //     const bannerTwo = document.createElement('H1');
+    //     const winner = document.createTextNode(` Winner! `);
+    //     const loser = document.createTextNode(` Loser.`);
+    //     doubleDamage();
+    //     if (doubleDamage() === true) {
+    //         banner.appendChild(winner)
+    //         firstPlayer.append(banner);
+
+    //         bannerTwo.appendChild(loser)
+    //         secondPlayer.append(bannerTwo);
+    //     } else {
+    //         bannerTwo.appendChild(winner)
+    //         secondPlayer.append(bannerTwo);
+
+    //         banner.appendChild(loser)
+    //         firstPlayer.append(banner);
+    //     }
+    // }, 1000)
+
+
 
 }
 

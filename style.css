@@ -91,3 +91,12 @@ li {
 #battle-image:hover {
   transform: scale(2.5);
 }
+
+.pokedex {
+  font-family: "Goldman", cursive;
+  font-size: 35px;
+  color: white;
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: black;
+  margin-top: 1em;
+}
