@@ -12,13 +12,14 @@ let poke1Type2Array;
 let poke2Type1Array;
 let poke2Type2Array;
 
+
 //To Load Pokemon List
-window.onload = function () {
-    getPokemon();
+onload = function () {
+    getPokemon(fetch);
 };
 
 //Fetches the Pokemon from the API
-const getPokemon = () => {
+const getPokemon = (fetch) => {
     fetch ('https://pokeapi.co/api/v2/pokemon?limit=386')
     .then(response => response.json())
     .then(pokemon => arrayOfPokemon = pokemon)
@@ -161,3 +162,44 @@ const pokemonBattle = () => {
     }, 1000)
 
 }
+
+
+//TESTING! HOORAY!
+
+const assert = require('assert');
+
+describe('getPokemon', () => {
+    it('calls fetch with the correct url', () => {
+        const fakeFetch = url => {
+            assert(
+                url ===
+                'https://pokeapi.co/api/v2/pokemon'
+            )
+            return new Promise(function(resolve) {
+            })
+        }
+        setTimeout(function() {
+            getPokemon(fakeFetch)
+        }, 1000)
+    })
+    // it('parses the response of fetch correctly', (done) => {
+    //     const fakeFetch = () => {
+    //         return Promise.resolve({
+    //             json: () => Promise.resolve({
+    //                 results: [
+    //                     { name: 'bulbasaur' }
+    //                 ]
+    //             }
+    //         })
+    //     }
+    //     setTimeout(function() {
+    //         getPokemon(fakeFetch)
+    //         .then(result => {
+    //             assert(result.name === 'bulbasaur')
+    //             done()
+    //         })
+    //     }, 1000)
+    // })
+})
+
+
