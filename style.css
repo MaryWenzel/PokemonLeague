@@ -1,9 +1,18 @@
 body {
-  background-image: url("./images/background.jpg");
+  /* background-image: url("./images/background.jpg");
   background-size: 185%;
   background-attachment: fixed;
   background-position: center;
+  background-repeat: no-repeat; */
   margin: auto;
+}
+
+html {
+  background-image: url("./images/background.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 header {
@@ -18,12 +27,23 @@ header {
   border-top: solid 2px black;
 }
 
-h1 {
+.header {
   color: white;
   font-size: 70px;
   font-family: "Press Start 2P", cursive;
   -webkit-text-stroke-width: 2.5px;
   -webkit-text-stroke-color: black;
+  margin: auto;
+}
+
+h1 {
+  font-family: "Press Start 2P", cursive;
+  font-size: 30px;
+  text-shadow: 2px 2px 2px black;
+  color: white;
+  -webkit-text-stroke-width: 1.5px;
+  -webkit-text-stroke-color: black;
+  margin-bottom: -1.5em;
 }
 
 .main-container {
@@ -44,6 +64,10 @@ h1 {
 .pokemon-2 {
   grid-area: two;
   text-align: center;
+}
+
+img {
+  margin-top: 2em;
 }
 
 #battle-section {
