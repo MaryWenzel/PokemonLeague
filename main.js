@@ -190,17 +190,30 @@ const pokemonBattle = () => {
     fetch (pokeInfoArray1.types[0].type.url)
     .then(response => response.json())
     .then(pokemon => poke1Type1Array = pokemon)
+    //Fetch Type 2 of Pokemon 1
+    if (pokeInfoArray1.types[1] !== undefined) {
+        fetch (pokeInfoArray1.types[1].type.url)
+        .then(response => response.json())
+        .then(pokemon => poke1Type2Array = pokemon)
+    }
     //Fetch Type 1 of Pokemon 2
     fetch (pokeInfoArray2.types[0].type.url)
     .then(response => response.json())
     .then(pokemon => poke2Type1Array = pokemon)
+    //Fetch Type 2 of Pokemon 2
+    if (pokeInfoArray2.types[1] !== undefined) {
+        fetch (pokeInfoArray2.types[1].type.url)
+        .then(response => response.json())
+        .then(pokemon => poke2Type2Array = pokemon)
+    }
     //Log Damage Relationships
     setTimeout(function() {
         console.log(poke1Type1Array['damage_relations'])
         console.log(poke2Type1Array['damage_relations'])
     }, 1000)
 
-    //Double Damage Determiner
+    //Type 1 VS Type 1
+    //First Pokemon Double Damage Determiner
     const doubleDamage = () => {
         //Move values into an array for far easier comparison
         let superArray = poke1Type1Array['damage_relations']['double_damage_to'].map(({ name }) => name);
@@ -209,18 +222,36 @@ const pokemonBattle = () => {
             console.log("theFirstOne");
             return false;
         } else {
-                if (superArray.includes(poke2Type1Array['name'])) {
-                    console.log('Super Effective!');
-                    return true;
-                } else {
-                    console.log('Else');
-                    console.log("Not Super Effective");
-                    return false;
-                }
+            if (superArray.includes(poke2Type1Array['name'])) {
+                console.log('Super Effective!');
+                 return true;
+            } else {
+                console.log('Else');
+                console.log("Not Super Effective");
+                return false;
+            }
+        }
+    }
+    //Second Pokemon Double Damage Determiner
+    const secondDoubleDamage = () => {
+        let superArray = poke2Type1Array['damage_relations']['double_damage_to'].map(({ name }) => name);
+        if (poke2Type1Array['damage_relations']['double_damage_to'].length === 0) {
+            console.log("Not Super Effective");
+            console.log("theFirstOne");
+            return false;
+        } else {
+            if (superArray.includes(poke1Type1Array['name'])) {
+                console.log('Super Effective!');
+                return true;
+            } else {
+                console.log('Else');
+                console.log("Not Super Effective");
+                return false;
+            }
         }
     }
 
-    //Damage Resistance Determiner
+    //First Pokemon Damage Resistance Determiner
     const damageResistance = () => {
         //Move values into an array for far easier comparison
         let resistanceArray = poke1Type1Array['damage_relations']['half_damage_from'].map(({ name }) => name);
@@ -229,18 +260,38 @@ const pokemonBattle = () => {
             console.log("Not Resistant theFirstOne");
             return false;
         } else {
-                if (resistanceArray.includes(poke2Type1Array['name'])) {
-                    console.log('Resists!');
-                    return true;
-                } else {
-                    console.log('Not Resistant Else');
-                    console.log("Not Resistant");
-                    return false;
-                }
+            if (resistanceArray.includes(poke2Type1Array['name'])) {
+                console.log('Resists!');
+                return true;
+            } else {
+                console.log('Not Resistant Else');
+                console.log("Not Resistant");
+                return false;
+            }
         }
     }
 
-    //Damage Immune Determiner
+    //Second Pokemon Resistance Determiner
+    const secondDamageResistance = () => {
+        //Move values into an array for far easier comparison
+        let resistanceArray = poke2Type1Array['damage_relations']['half_damage_from'].map(({ name }) => name);
+        if (poke2Type1Array['damage_relations']['half_damage_from'].length === 0) {
+            console.log("Not Resistant");
+            console.log("Not Resistant theFirstOne");
+            return false;
+        } else {
+            if (resistanceArray.includes(poke1Type1Array['name'])) {
+                console.log('Resists!');
+                return true;
+            } else {
+                console.log('Not Resistant Else');
+                console.log("Not Resistant");
+                return false;
+            }
+        }
+    }
+
+    //First Pokemon Damage Immune Determiner
     const damageImmune = () => {
         //Move values into an array for far easier comparison
         let immuneArray = poke1Type1Array['damage_relations']['no_damage_from'].map(({ name }) => name);
@@ -249,79 +300,402 @@ const pokemonBattle = () => {
             console.log("NI theFirstOne");
             return false;
         } else {
-                if (immuneArray.includes(poke2Type1Array['name'])) {
-                    console.log('Immune!');
-                    return true;
-                } else {
-                    console.log('NI Else');
-                    console.log("Not Immune");
-                    return false;
-                }
+            if (immuneArray.includes(poke2Type1Array['name'])) {
+                console.log('Immune!');
+                return true;
+            } else {
+                console.log('NI Else');
+                console.log("Not Immune");
+                return false;
+            }
+        }
+    }
+
+    //Second Pokemon Damage Immune Determiner
+    const secondDamageImmune = () => {
+        //Move values into an array for far easier comparison
+        let immuneArray = poke2Type1Array['damage_relations']['no_damage_from'].map(({ name }) => name);
+        if (poke2Type1Array['damage_relations']['no_damage_from'].length === 0) {
+            console.log("Not Immune");
+            console.log("NI theFirstOne");
+            return false;
+        } else {
+            if (immuneArray.includes(poke1Type1Array['name'])) {
+                console.log('Immune!');
+                return true;
+            } else {
+                console.log('NI Else');
+                console.log("Not Immune");
+                return false;
+            }
         }
     }
 
 
-    //Damage Determiners for the Second Types!
-        //Second Type Double Damage Determiner
-        const doubleDamage = () => {
-            //Move values into an array for far easier comparison
-            let superArray = poke1Type1Array['damage_relations']['double_damage_to'].map(({ name }) => name);
-            if (poke1Type1Array['damage_relations']['double_damage_to'].length === 0) {
+    //Damage Determiners for the Second Type! Second Type VS Second Type
+    //First Pokemon Double Damage Determiner
+    const doubleDamage2 = () => {
+        //Move values into an array for far easier comparison
+        let superArray = poke1Type2Array['damage_relations']['double_damage_to'].map(({ name }) => name);
+        if (poke1Type2Array['damage_relations']['double_damage_to'].length === 0) {
+            console.log("Not Super Effective");
+            console.log("theFirstOne");
+            return false;
+        } else {
+            if (superArray.includes(poke2Type2Array['name'])) {
+                console.log('Super Effective!');
+                return true;
+            } else {
+                console.log('Else');
                 console.log("Not Super Effective");
-                console.log("theFirstOne");
                 return false;
-            } else {
-                    if (superArray.includes(poke2Type1Array['name'])) {
-                        console.log('Super Effective!');
-                        return true;
-                    } else {
-                        console.log('Else');
-                        console.log("Not Super Effective");
-                        return false;
-                    }
             }
         }
-    
-        //Second Type Damage Resistance Determiner
-        const damageResistance = () => {
-            //Move values into an array for far easier comparison
-            let resistanceArray = poke1Type1Array['damage_relations']['half_damage_from'].map(({ name }) => name);
-            if (poke1Type1Array['damage_relations']['half_damage_from'].length === 0) {
-                console.log("Not Resistant");
-                console.log("Not Resistant theFirstOne");
-                return false;
-            } else {
-                    if (resistanceArray.includes(poke2Type1Array['name'])) {
-                        console.log('Resists!');
-                        return true;
-                    } else {
-                        console.log('Not Resistant Else');
-                        console.log("Not Resistant");
-                        return false;
-                    }
-            }
-        }
-    
-        //Second Type Damage Immune Determiner
-        const damageImmune = () => {
-            //Move values into an array for far easier comparison
-            let immuneArray = poke1Type1Array['damage_relations']['no_damage_from'].map(({ name }) => name);
-            if (poke1Type1Array['damage_relations']['no_damage_from'].length === 0) {
-                console.log("Not Immune");
-                console.log("NI theFirstOne");
-                return false;
-            } else {
-                    if (immuneArray.includes(poke2Type1Array['name'])) {
-                        console.log('Immune!');
-                        return true;
-                    } else {
-                        console.log('NI Else');
-                        console.log("Not Immune");
-                        return false;
-                    }
-            }
-        }
+    }
 
+     //Second Pokemon Double Damage Determiner
+    const secondDoubleDamage2 = () => {
+    //Move values into an array for far easier comparison
+    let superArray = poke2Type2Array['damage_relations']['double_damage_to'].map(({ name }) => name);
+        if (poke2Type2Array['damage_relations']['double_damage_to'].length === 0) {
+            console.log("Not Super Effective");
+            console.log("theFirstOne");
+            return false;
+        } else {
+            if (superArray.includes(poke1Type2Array['name'])) {
+                console.log('Super Effective!');
+                return true;
+            } else {
+                console.log('Else');
+                console.log("Not Super Effective");
+                return false;
+            }
+        }
+    }
+    
+     //First Pokemon Damage Resistance Determiner
+    const damageResistance2 = () => {
+        //Move values into an array for far easier comparison
+        let resistanceArray = poke1Type2Array['damage_relations']['half_damage_from'].map(({ name }) => name);
+        if (poke1Type2Array['damage_relations']['half_damage_from'].length === 0) {
+            console.log("Not Resistant");
+            console.log("Not Resistant theFirstOne");
+            return false;
+        } else {
+            if (resistanceArray.includes(poke2Type2Array['name'])) {
+                console.log('Resists!');
+                return true;
+            } else {
+                console.log('Not Resistant Else');
+                console.log("Not Resistant");
+                return false;
+            }
+        }
+    }
+
+    //Second Pokemon Second Type Damage Resistance Determiner
+    const secondDamageResistance2 = () => {
+        //Move values into an array for far easier comparison
+        let resistanceArray = poke2Type2Array['damage_relations']['half_damage_from'].map(({ name }) => name);
+        if (poke2Type2Array['damage_relations']['half_damage_from'].length === 0) {
+            console.log("Not Resistant");
+            console.log("Not Resistant theFirstOne");
+            return false;
+        } else {
+            if (resistanceArray.includes(poke1Type2Array['name'])) {
+                console.log('Resists!');
+                return true;
+            } else {
+                console.log('Not Resistant Else');
+                console.log("Not Resistant");
+                return false;
+            }
+        }
+    }
+    
+    //First Pokemon Damage Immune Determiner
+    const damageImmune2 = () => {
+        //Move values into an array for far easier comparison
+        let immuneArray = poke1Type2Array['damage_relations']['no_damage_from'].map(({ name }) => name);
+        if (poke1Type2Array['damage_relations']['no_damage_from'].length === 0) {
+            console.log("Not Immune");
+            console.log("NI theFirstOne");
+            return false;
+        } else {
+            if (immuneArray.includes(poke2Type2Array['name'])) {
+                console.log('Immune!');
+                return true;
+            } else {
+                console.log('NI Else');
+                console.log("Not Immune");
+                return false;
+            }
+        }
+    }
+
+    //Second Pokemon Second Type Damage Immune Determiner
+    const secondDamageImmune2 = () => {
+        //Move values into an array for far easier comparison
+        let immuneArray = poke2Type2Array['damage_relations']['no_damage_from'].map(({ name }) => name);
+        if (poke2Type2Array['damage_relations']['no_damage_from'].length === 0) {
+            console.log("Not Immune");
+            console.log("NI theFirstOne");
+            return false;
+        } else {
+            if (immuneArray.includes(poke1Type2Array['name'])) {
+                console.log('Immune!');
+                return true;
+            } else {
+                console.log('NI Else');
+                console.log("Not Immune");
+                return false;
+            }
+        }
+    }
+
+
+    //Damage Determiners for the First Type VS Second Type
+    //First Pokemon Double Damage Determiner
+    const doubleDamage3 = () => {
+        //Move values into an array for far easier comparison
+        let superArray = poke1Type1Array['damage_relations']['double_damage_to'].map(({ name }) => name);
+        if (poke1Type1Array['damage_relations']['double_damage_to'].length === 0) {
+            console.log("Not Super Effective");
+            console.log("theFirstOne");
+            return false;
+        } else {
+            if (superArray.includes(poke2Type2Array['name'])) {
+                console.log('Super Effective!');
+                return true;
+            } else {
+                console.log('Else');
+                console.log("Not Super Effective");
+                return false;
+            }
+        }
+    }
+
+    //Second Pokemon Double Damage Determiner
+    const secondDoubleDamage3 = () => {
+        //Move values into an array for far easier comparison
+        let superArray = poke2Type1Array['damage_relations']['double_damage_to'].map(({ name }) => name);
+        if (poke2Type1Array['damage_relations']['double_damage_to'].length === 0) {
+            console.log("Not Super Effective");
+            console.log("theFirstOne");
+            return false;
+        } else {
+            if (superArray.includes(poke1Type2Array['name'])) {
+                console.log('Super Effective!');
+                return true;
+            } else {
+                console.log('Else');
+                console.log("Not Super Effective");
+                return false;
+            }
+        }
+    }
+    
+    //First Pokemon Damage Resistance Determiner
+    const damageResistance3 = () => {
+        //Move values into an array for far easier comparison
+        let resistanceArray = poke1Type1Array['damage_relations']['half_damage_from'].map(({ name }) => name);
+        if (poke1Type1Array['damage_relations']['half_damage_from'].length === 0) {
+            console.log("Not Resistant");
+            console.log("Not Resistant theFirstOne");
+            return false;
+        } else {
+            if (resistanceArray.includes(poke2Type2Array['name'])) {
+                console.log('Resists!');
+                return true;
+            } else {
+                console.log('Not Resistant Else');
+                console.log("Not Resistant");
+                return false;
+            }
+        }
+    }
+
+    //Second Pokemon Damage Resistance Determiner
+    const secondDamageResistance3 = () => {
+        //Move values into an array for far easier comparison
+        let resistanceArray = poke2Type1Array['damage_relations']['half_damage_from'].map(({ name }) => name);
+        if (poke2Type1Array['damage_relations']['half_damage_from'].length === 0) {
+            console.log("Not Resistant");
+            console.log("Not Resistant theFirstOne");
+            return false;
+        } else {
+            if (resistanceArray.includes(poke1Type2Array['name'])) {
+                console.log('Resists!');
+                return true;
+            } else {
+                console.log('Not Resistant Else');
+                console.log("Not Resistant");
+                return false;
+            }
+        }
+    }
+    
+    //First Pokemon Damage Immune Determiner
+    const damageImmune3 = () => {
+        //Move values into an array for far easier comparison
+        let immuneArray = poke1Type1Array['damage_relations']['no_damage_from'].map(({ name }) => name);
+        if (poke1Type1Array['damage_relations']['no_damage_from'].length === 0) {
+            console.log("Not Immune");
+            console.log("NI theFirstOne");
+            return false;
+        } else {
+            if (immuneArray.includes(poke2Type2Array['name'])) {
+                console.log('Immune!');
+                return true;
+            } else {
+                console.log('NI Else');
+                console.log("Not Immune");
+                return false;
+            }
+        }
+    }
+
+    //Second Pokemon Damage Immune Determiner
+    const secondDamageImmune3 = () => {
+        //Move values into an array for far easier comparison
+        let immuneArray = poke2Type1Array['damage_relations']['no_damage_from'].map(({ name }) => name);
+        if (poke2Type1Array['damage_relations']['no_damage_from'].length === 0) {
+            console.log("Not Immune");
+            console.log("NI theFirstOne");
+            return false;
+        } else {
+            if (immuneArray.includes(poke1Type2Array['name'])) {
+                console.log('Immune!');
+                return true;
+            } else {
+                console.log('NI Else');
+                console.log("Not Immune");
+                return false;
+            }
+        }
+    }
+
+
+    //Damage Determiners for the Second Type VS First Type
+    //First Pokemon Double Damage Determiner
+    const doubleDamage4 = () => {
+        //Move values into an array for far easier comparison
+        let superArray = poke1Type2Array['damage_relations']['double_damage_to'].map(({ name }) => name);
+        if (poke1Type2Array['damage_relations']['double_damage_to'].length === 0) {
+            console.log("Not Super Effective");
+            console.log("theFirstOne");
+            return false;
+        } else {
+            if (superArray.includes(poke2Type1Array['name'])) {
+                console.log('Super Effective!');
+                return true;
+            } else {
+                console.log('Else');
+                console.log("Not Super Effective");
+                return false;
+            }
+        }
+    }
+
+    //Second Pokemon Double Damage Determiner
+    const secondDoubleDamage4 = () => {
+        //Move values into an array for far easier comparison
+        let superArray = poke2Type2Array['damage_relations']['double_damage_to'].map(({ name }) => name);
+        if (poke2Type2Array['damage_relations']['double_damage_to'].length === 0) {
+            console.log("Not Super Effective");
+            console.log("theFirstOne");
+            return false;
+        } else {
+            if (superArray.includes(poke1Type1Array['name'])) {
+                console.log('Super Effective!');
+                return true;
+            } else {
+                console.log('Else');
+                console.log("Not Super Effective");
+                return false;
+            }
+        }
+    }
+    
+    //First Pokemon Damage Resistance Determiner
+    const damageResistance4 = () => {
+        //Move values into an array for far easier comparison
+        let resistanceArray = poke1Type2Array['damage_relations']['half_damage_from'].map(({ name }) => name);
+        if (poke1Type2Array['damage_relations']['half_damage_from'].length === 0) {
+            console.log("Not Resistant");
+            console.log("Not Resistant theFirstOne");
+            return false;
+        } else {
+            if (resistanceArray.includes(poke2Type1Array['name'])) {
+                console.log('Resists!');
+                return true;
+            } else {
+                console.log('Not Resistant Else');
+                console.log("Not Resistant");
+                return false;
+            }
+        }
+    }
+
+    //Second Pokemon Damage Resistance Determiner
+    const secondDamageResistance4 = () => {
+        //Move values into an array for far easier comparison
+        let resistanceArray = poke2Type2Array['damage_relations']['half_damage_from'].map(({ name }) => name);
+        if (poke2Type2Array['damage_relations']['half_damage_from'].length === 0) {
+            console.log("Not Resistant");
+            console.log("Not Resistant theFirstOne");
+            return false;
+        } else {
+            if (resistanceArray.includes(poke1Type1Array['name'])) {
+                console.log('Resists!');
+                return true;
+            } else {
+                console.log('Not Resistant Else');
+                console.log("Not Resistant");
+                return false;
+            }
+        }
+    }
+    
+    //First Pokemon Damage Immune Determiner
+    const damageImmune4 = () => {
+        //Move values into an array for far easier comparison
+        let immuneArray = poke1Type2Array['damage_relations']['no_damage_from'].map(({ name }) => name);
+        if (poke1Type2Array['damage_relations']['no_damage_from'].length === 0) {
+            console.log("Not Immune");
+            console.log("NI theFirstOne");
+            return false;
+        } else {
+            if (immuneArray.includes(poke2Type1Array['name'])) {
+                console.log('Immune!');
+                return true;
+            } else {
+                console.log('NI Else');
+                console.log("Not Immune");
+                return false;
+            }
+        }
+    }
+
+    //Second Pokemon Damage Immune Determiner
+    const secondDamageImmune4 = () => {
+        //Move values into an array for far easier comparison
+        let immuneArray = poke2Type2Array['damage_relations']['no_damage_from'].map(({ name }) => name);
+        if (poke2Type2Array['damage_relations']['no_damage_from'].length === 0) {
+            console.log("Not Immune");
+            console.log("NI theFirstOne");
+            return false;
+        } else {
+            if (immuneArray.includes(poke1Type1Array['name'])) {
+                console.log('Immune!');
+                return true;
+            } else {
+                console.log('NI Else');
+                console.log("Not Immune");
+                return false;
+            }
+        }
+    }
 
 
 
@@ -333,46 +707,184 @@ const pokemonBattle = () => {
         const bannerTwo = document.createElement('H1');
         const winner = document.createTextNode(` Winner! `);
         const loser = document.createTextNode(` Loser.`);
+        const tie = document.createTextNode(` Tie! `);
+        const tie2 = document.createTextNode(` Tie! `);
+        let pokeBattleArray1 = [];
+        let pokeBattleArray2 = [];
 
+
+
+        //First Pokemon Type 1 VS Second Pokemon Type 1
         damageImmune();
-        doubleDamage();
-        damageResistance();
-
         if (damageImmune() === true) {
+            pokeBattleArray1.push(true);
+        }
+
+        secondDamageImmune();
+        if (secondDamageImmune() === true) {
+            pokeBattleArray2.push(true);
+        }
+
+        doubleDamage();
+        if (doubleDamage() === true) {
+            pokeBattleArray1.push(true);
+        }
+
+        secondDoubleDamage();
+        if (secondDoubleDamage() === true) {
+            pokeBattleArray2.push(true);
+        }
+
+        damageResistance();
+        if (damageResistance() === true) {
+            pokeBattleArray1.push(true);
+        }
+
+        secondDamageResistance();
+        if (secondDamageResistance() === true) {
+            pokeBattleArray2.push(true);
+        }
+
+        
+        //First Pokemon Type 2 VS Second Pokemon Type 2
+        if (pokeInfoArray1.types[1] !== undefined && pokeInfoArray2.types[1] !== undefined) {
+            damageImmune2();
+            if (damageImmune2() === true) {
+                pokeBattleArray1.push(true);
+            }
+
+            secondDamageImmune2();
+            if (secondDamageImmune2() === true) {
+                pokeBattleArray2.push(true);
+            }
+    
+            doubleDamage2();
+            if (doubleDamage2() === true) {
+                pokeBattleArray1.push(true);
+            }
+
+            secondDoubleDamage2();
+            if (secondDoubleDamage2() === true) {
+                pokeBattleArray2.push(true);
+            }
+    
+            damageResistance2();
+            if (damageResistance2() === true) {
+                pokeBattleArray1.push(true);
+            }
+
+            secondDamageResistance2();
+            if (secondDamageResistance2() === true) {
+                pokeBattleArray2.push(true);
+            }
+        }
+
+
+        //First Pokemon Type 1 VS Second Pokemon Type 2
+        if (pokeInfoArray2.types[1] !== undefined) {
+            damageImmune3();
+            if (damageImmune3() === true) {
+                pokeBattleArray1.push(true);
+            }
+    
+            doubleDamage3();
+            if (doubleDamage3() === true) {
+                pokeBattleArray1.push(true);
+            }
+    
+            damageResistance3();
+            if (damageResistance3() === true) {
+                pokeBattleArray1.push(true);
+            }
+        }
+
+        //Second Pokemon Type 1 VS First Pokemon Type 2
+        if (pokeInfoArray1.types[1] !== undefined) {
+            secondDamageImmune3();
+            if (secondDamageImmune3() === true) {
+                pokeBattleArray2.push(true);
+            }
+
+            secondDoubleDamage3();
+            if (secondDoubleDamage3() === true) {
+                pokeBattleArray2.push(true);
+            }
+
+            secondDamageResistance3();
+            if (secondDamageResistance3() === true) {
+                pokeBattleArray2.push(true);
+            }
+        }
+
+
+        //First Pokemon Type 2 VS Second Pokemon Type 1
+        if (pokeInfoArray1.types[1] !== undefined) {
+            damageImmune4();
+            if (damageImmune4() === true) {
+                pokeBattleArray1.push(true);
+            }
+    
+            doubleDamage4();
+            if (doubleDamage4() === true) {
+                pokeBattleArray1.push(true);
+            }
+    
+            damageResistance4();
+            if (damageResistance4() === true) {
+                pokeBattleArray1.push(true);
+            }
+        }
+
+        //Second Pokemon Type 2 VS First Pokemon Type 1
+        if (pokeInfoArray2.types[1] !== undefined) {
+
+            secondDamageImmune4();
+            if (secondDamageImmune4() === true) {
+                pokeBattleArray2.push(true);
+            }
+
+            secondDoubleDamage4();
+            if (secondDoubleDamage4() === true) {
+                pokeBattleArray2.push(true);
+            }
+
+            secondDamageResistance4();
+            if (secondDamageResistance4() === true) {
+                pokeBattleArray1.push(true);
+            }
+        }
+
+        console.log(pokeBattleArray1);
+        console.log(pokeBattleArray2);
+    
+        if (pokeBattleArray1.length > pokeBattleArray2.length) {
             banner.appendChild(winner)
             firstPlayer.append(banner);
-
+    
             bannerTwo.appendChild(loser)
             secondPlayer.append(bannerTwo);
-        } else if (doubleDamage() === true) {
-            banner.appendChild(winner)
-            firstPlayer.append(banner);
-
-            bannerTwo.appendChild(loser)
-            secondPlayer.append(bannerTwo);
-        } else if (damageResistance() === true) {
-            banner.appendChild(winner)
-            firstPlayer.append(banner);
-
-            bannerTwo.appendChild(loser)
-            secondPlayer.append(bannerTwo);
-        } else {
-            bannerTwo.appendChild(winner)
-            secondPlayer.append(bannerTwo);
-
+        } else if (pokeBattleArray1.length < pokeBattleArray2.length) {
             banner.appendChild(loser)
             firstPlayer.append(banner);
+    
+            bannerTwo.appendChild(winner)
+            secondPlayer.append(bannerTwo);
+        } else if (pokeBattleArray1.length === pokeBattleArray2.length) {
+            banner.appendChild(tie)
+            firstPlayer.append(banner);
+    
+            bannerTwo.appendChild(tie2)
+            secondPlayer.append(bannerTwo);
         }
+
+
 
         //Play sound effect
         let audio = new Audio('WIN A BATTLE POKEMON - SOUND EFFECT.mp3')
         audio.play();
 
     }, 1000)
-
-
-
-}
+};
 
 
 //TESTING! HOORAY!
