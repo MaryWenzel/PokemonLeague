@@ -25,7 +25,7 @@ onload = function () {
 
 //Fetches the Pokemon from the API
 const getPokemon = (fetch) => {
-    fetch ('https://pokeapi.co/api/v2/pokemon?limit=518')
+    fetch ('https://pokeapi.co/api/v2/pokemon?limit=700')
     .then(response => response.json())
     .then(pokemon => arrayOfPokemon = pokemon)
     setTimeout(function() {
@@ -33,9 +33,9 @@ const getPokemon = (fetch) => {
     }, 1000)
 };
 
-const getPokedex = () => {
+const getPokedex = (fetch) => {
     fetch ('https://pokeapi.co/api/v2/pokedex/1/')
-    .then(response => response.json(fetch))
+    .then(response => response.json())
     .then(pokedex => pokedexPortal = pokedex)
     setTimeout(function() {
         console.log(pokedexPortal)
@@ -57,7 +57,7 @@ const generatePokemon = () => {
     let dexSection1 = document.getElementById("pokedex-1");
     dexSection1.innerHTML = null;
     //Generate Random Pokemon!
-    let randomPokemonOne = arrayOfPokemon.results[Math.floor(Math.random() * 518)];
+    let randomPokemonOne = arrayOfPokemon.results[Math.floor(Math.random() * 700)];
     console.log(randomPokemonOne);
     console.log(randomPokemonOne.url);
     fetch (randomPokemonOne.url)
@@ -103,6 +103,7 @@ const generatePokemon = () => {
                 console.log(pokedex1Array)
                 const li = document.createElement('ul');
                 const text = document.createTextNode(`${pokedex1Array["flavor_text_entries"][0]["flavor_text"]}`)
+                console.log(text);
                 dexSection.appendChild(text)
                 dexSection.appendChild(li);
             }, 1000)
@@ -120,10 +121,10 @@ const generateSecondPokemon = () => {
     document.getElementById("first-result").innerHTML = "";
     document.getElementById("second-result").innerHTML = "";
     //Hides Previous Pokedex Entries
-    // let dexSection2 = document.getElementById("pokedex-2");
-    // dexSection2.innerHTML = null;
+    let dexSection2 = document.getElementById("pokedex-2");
+    dexSection2.innerHTML = null;
     //Generate Random Pokemon!
-    let randomPokemonTwo = arrayOfPokemon.results[Math.floor(Math.random() * 518)];
+    let randomPokemonTwo = arrayOfPokemon.results[Math.floor(Math.random() * 700)];
     console.log(randomPokemonTwo);
     console.log(randomPokemonTwo.url);
     fetch (randomPokemonTwo.url)
@@ -131,6 +132,7 @@ const generateSecondPokemon = () => {
     .then(pokemon => pokeInfoArray2 = pokemon)
     setTimeout(function() {
         console.log(pokeInfoArray2)
+        console.log("Pokemon number is " + pokeInfoArray2.id);
     }, 1000)
     let secondPokemon = document.getElementById('second-pokemon-section');
     secondPokemon.innerHTML = null;
@@ -138,7 +140,7 @@ const generateSecondPokemon = () => {
         const li = document.createElement('li');
         const img = document.createElement('img');
         const ul = document.createElement('ul');
-        const name = document.createTextNode(` ${capitalize(pokeInfoArray2.name)}`)
+        const name = document.createTextNode(`${capitalize(pokeInfoArray2.name)}`)
         const type1 = document.createTextNode(`${capitalize(pokeInfoArray2.types[0]["type"]["name"])}`)
         // img.src = pokeInfoArray1.sprites.front_default
         img.src = pokeInfoArray2["sprites"]["other"]['official-artwork']["front_default"];
@@ -153,26 +155,27 @@ const generateSecondPokemon = () => {
             ul.append(li)
         };
         //Generate Pokedex Entries!
-        // let dexSection = document.getElementById("pokedex-2");
-        // const button = document.createElement('button');
-        // button.innerHTML = "Pokédex Entry"
-        // const ul2 = document.createElement('ul');
-        // dexSection.append(button)
-        // button.addEventListener('click', () => {
-        //     dexSection.innerHTML = null;
-        //     let pokeNumberTwo = pokeInfoArray2.id;
-        //     fetch (pokedexPortal["pokemon_entries"][pokeNumberTwo-1]["pokemon_species"]["url"])
-        //     .then(response => response.json())
-        //     .then(pokemon => pokedex2Array = pokemon)
-        //     setTimeout(function() {
-        //         console.log(pokedex2Array)
-        //         const li = document.createElement('ul');
-        //         const text = document.createTextNode(`${pokedex1Array["flavor_text_entries"][0]["flavor_text"]}`)
-        //         dexSection.appendChild(text)
-        //         dexSection.appendChild(li);
-        //     }, 1000)
-        // })
-
+        let dexSection2 = document.getElementById("pokedex-2");
+        const button = document.createElement('button');
+        button.innerHTML = "Pokédex Entry"
+        const ul2 = document.createElement('ul');
+        console.log("HERE")
+        dexSection2.append(button)
+        button.addEventListener('click', () => {
+            dexSection2.innerHTML = null;
+            let pokeNumberTwo = pokeInfoArray2.id;
+            fetch (pokedexPortal["pokemon_entries"][pokeNumberTwo-1]["pokemon_species"]["url"])
+            .then(response => response.json())
+            .then(pokemon => pokedex2Array = pokemon)
+            setTimeout(function() {
+                console.log(pokedex2Array)
+                const li = document.createElement('ul');
+                let text = document.createTextNode(`${pokedex2Array["flavor_text_entries"][0]["flavor_text"]}`);
+                console.log(text);
+                dexSection2.appendChild(text);
+                dexSection2.appendChild(li);
+            }, 1000)
+        })
         secondPokemon.append(li)
     }, 1000)
 };
@@ -296,30 +299,11 @@ const pokemonBattle = () => {
             firstPlayer.append(banner);
         }
 
+        //Play sound effect
+        let audio = new Audio('WIN A BATTLE POKEMON - SOUND EFFECT.mp3')
+        audio.play();
+
     }, 1000)
-
-    // setTimeout(function() {
-    //     const firstPlayer = document.getElementById('first-result');
-    //     const secondPlayer = document.getElementById('second-result');
-    //     const banner = document.createElement('H1');
-    //     const bannerTwo = document.createElement('H1');
-    //     const winner = document.createTextNode(` Winner! `);
-    //     const loser = document.createTextNode(` Loser.`);
-    //     doubleDamage();
-    //     if (doubleDamage() === true) {
-    //         banner.appendChild(winner)
-    //         firstPlayer.append(banner);
-
-    //         bannerTwo.appendChild(loser)
-    //         secondPlayer.append(bannerTwo);
-    //     } else {
-    //         bannerTwo.appendChild(winner)
-    //         secondPlayer.append(bannerTwo);
-
-    //         banner.appendChild(loser)
-    //         firstPlayer.append(banner);
-    //     }
-    // }, 1000)
 
 
 
@@ -344,24 +328,4 @@ describe('getPokemon', () => {
             getPokemon(fakeFetch)
         }, 1000)
     })
-    // it('parses the response of fetch correctly', (done) => {
-    //     const fakeFetch = () => {
-    //         return Promise.resolve({
-    //             json: () => Promise.resolve({
-    //                 results: [
-    //                     { name: 'bulbasaur' }
-    //                 ]
-    //             }
-    //         })
-    //     }
-    //     setTimeout(function() {
-    //         getPokemon(fakeFetch)
-    //         .then(result => {
-    //             assert(result.name === 'bulbasaur')
-    //             done()
-    //         })
-    //     }, 1000)
-    // })
 })
-
-
