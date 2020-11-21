@@ -101,6 +101,16 @@ const generatePokemon = () => {
             .then(pokemon => pokedex1Array = pokemon)
             setTimeout(function() {
                 console.log(pokedex1Array)
+                //Filter out non English Entries
+                const englishFilter = () => {
+                    if (pokedex1Array['flavor_text_entries'][0]['language']['name'] !== "en"){
+                        pokedex1Array['flavor_text_entries'].splice(0, 1);
+                        englishFilter();
+                    } else {
+                        return pokedex1Array;
+                    }
+                }
+                englishFilter();
                 const li = document.createElement('ul');
                 const text = document.createTextNode(`${pokedex1Array["flavor_text_entries"][0]["flavor_text"]}`)
                 console.log(text);
@@ -169,6 +179,16 @@ const generateSecondPokemon = () => {
             .then(pokemon => pokedex2Array = pokemon)
             setTimeout(function() {
                 console.log(pokedex2Array)
+                //Filter out non English Entries
+                const englishFilter = () => {
+                    if (pokedex2Array['flavor_text_entries'][0]['language']['name'] !== "en"){
+                        pokedex2Array['flavor_text_entries'].splice(0, 1);
+                        englishFilter();
+                    } else {
+                        return pokedex2Array;
+                    }
+                }
+                englishFilter();
                 const li = document.createElement('ul');
                 let text = document.createTextNode(`${pokedex2Array["flavor_text_entries"][0]["flavor_text"]}`);
                 console.log(text);
