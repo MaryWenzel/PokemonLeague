@@ -67,7 +67,7 @@ h1 {
 }
 
 img {
-  margin-top: 2em;
+  margin-top: 0.5em;
 }
 
 #battle-section {
@@ -101,6 +101,7 @@ li {
   font-size: 35px;
   line-height: 3px;
   color: white;
+  text-shadow: 2px 2px 2px black;
   list-style-type: disc;
   margin-top: -1em;
   letter-spacing: 2px;
@@ -117,10 +118,28 @@ li {
 }
 
 .pokedex {
+  height: 80px;
+  width: 80px;
+  background-color: transparent;
+  border: none;
   font-family: "Goldman", cursive;
-  font-size: 35px;
+  font-size: 15px;
   color: white;
-  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-width: 0.8px;
   -webkit-text-stroke-color: black;
-  margin-top: 1em;
+  padding-top: 10px;
+  background-image: url("./images/pokedex.png");
+  background-position: center;
+  background-size: 100%;
+  margin-top: 2em;
+}
+
+.pokedex-box {
+  font-family: "Goldman", cursive;
+  font-size: 25px;
+  text-shadow: 1px 1px 2px rgb(32, 32, 32);
+  color: white;
+  text-align: center;
+  -webkit-text-stroke-width: 1.6px;
+  -webkit-text-stroke-color: black;
 }
