@@ -90,7 +90,8 @@ const generatePokemon = () => {
         //Generate Pokedex Entries!
         let dexSection = document.getElementById("pokedex-1");
         const button = document.createElement('button');
-        button.innerHTML = "Pokédex Entry"
+        button.innerHTML = "Pokédex"
+        button.classList.add("pokedex")
         const ul2 = document.createElement('ul');
         dexSection.append(button)
         button.addEventListener('click', () => {
