@@ -67,7 +67,14 @@ h1 {
 }
 
 img {
+  /* position: relative;
+  z-index: -1; */
   margin-top: 0.5em;
+}
+
+.sprite-img {
+  position: relative;
+  z-index: -1;
 }
 
 #battle-section {

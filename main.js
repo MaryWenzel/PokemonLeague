@@ -77,6 +77,7 @@ const generatePokemon = () => {
         const type1 = document.createTextNode(`${capitalize(pokeInfoArray1.types[0]["type"]["name"])}`)
         // img.src = pokeInfoArray1.sprites.front_default
         img.src = pokeInfoArray1["sprites"]["other"]['official-artwork']["front_default"];
+        img.classList.add('sprite-img')
         firstPokemon.appendChild(img)
         li.appendChild(name)
         li.appendChild(ul)
@@ -143,6 +144,7 @@ const generateSecondPokemon = () => {
         const type1 = document.createTextNode(`${capitalize(pokeInfoArray2.types[0]["type"]["name"])}`)
         // img.src = pokeInfoArray1.sprites.front_default
         img.src = pokeInfoArray2["sprites"]["other"]['official-artwork']["front_default"];
+        img.classList.add('sprite-img')
         secondPokemon.appendChild(img)
         li.appendChild(name)
         li.appendChild(ul)
