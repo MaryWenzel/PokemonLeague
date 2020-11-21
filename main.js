@@ -261,6 +261,71 @@ const pokemonBattle = () => {
     }
 
 
+    //Damage Determiners for the Second Types!
+        //Second Type Double Damage Determiner
+        const doubleDamage = () => {
+            //Move values into an array for far easier comparison
+            let superArray = poke1Type1Array['damage_relations']['double_damage_to'].map(({ name }) => name);
+            if (poke1Type1Array['damage_relations']['double_damage_to'].length === 0) {
+                console.log("Not Super Effective");
+                console.log("theFirstOne");
+                return false;
+            } else {
+                    if (superArray.includes(poke2Type1Array['name'])) {
+                        console.log('Super Effective!');
+                        return true;
+                    } else {
+                        console.log('Else');
+                        console.log("Not Super Effective");
+                        return false;
+                    }
+            }
+        }
+    
+        //Second Type Damage Resistance Determiner
+        const damageResistance = () => {
+            //Move values into an array for far easier comparison
+            let resistanceArray = poke1Type1Array['damage_relations']['half_damage_from'].map(({ name }) => name);
+            if (poke1Type1Array['damage_relations']['half_damage_from'].length === 0) {
+                console.log("Not Resistant");
+                console.log("Not Resistant theFirstOne");
+                return false;
+            } else {
+                    if (resistanceArray.includes(poke2Type1Array['name'])) {
+                        console.log('Resists!');
+                        return true;
+                    } else {
+                        console.log('Not Resistant Else');
+                        console.log("Not Resistant");
+                        return false;
+                    }
+            }
+        }
+    
+        //Second Type Damage Immune Determiner
+        const damageImmune = () => {
+            //Move values into an array for far easier comparison
+            let immuneArray = poke1Type1Array['damage_relations']['no_damage_from'].map(({ name }) => name);
+            if (poke1Type1Array['damage_relations']['no_damage_from'].length === 0) {
+                console.log("Not Immune");
+                console.log("NI theFirstOne");
+                return false;
+            } else {
+                    if (immuneArray.includes(poke2Type1Array['name'])) {
+                        console.log('Immune!');
+                        return true;
+                    } else {
+                        console.log('NI Else');
+                        console.log("Not Immune");
+                        return false;
+                    }
+            }
+        }
+
+
+
+
+    //Determine the Winner!
     setTimeout(function() {
         const firstPlayer = document.getElementById('first-result');
         const secondPlayer = document.getElementById('second-result');
