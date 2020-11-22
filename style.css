@@ -217,4 +217,8 @@ footer {
     -webkit-text-stroke-width: 0px;
     -webkit-text-stroke-color: rgba(255, 255, 255, 0.58);
   }
+
+  #battle-image:hover {
+    transform: scale(1);
+  }
 }
