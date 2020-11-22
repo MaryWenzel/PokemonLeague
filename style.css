@@ -5,6 +5,8 @@ body {
   background-position: center;
   background-repeat: no-repeat; */
   margin: auto;
+  /* position: relative;
+  min-height: 100vh; */
 }
 
 html {
@@ -27,6 +29,7 @@ header {
   border-top: solid 2px black;
 }
 
+/* "Pokemon League" */
 .header {
   color: white;
   font-size: 70px;
@@ -46,14 +49,16 @@ h1 {
   margin-bottom: -1.5em;
 }
 
+/* grid container */
 .main-container {
-  height: 700px;
+  min-height: calc(85vh - 117px);
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr;
   gap: 0px 0px;
   grid-template-areas: "one battle two";
   margin-top: 2em;
+  padding-bottom: 2.5rem;
 }
 
 .pokemon-1 {
@@ -67,7 +72,14 @@ h1 {
 }
 
 img {
+  /* position: relative;
+  z-index: -1; */
   margin-top: 0.5em;
+}
+
+.sprite-img {
+  position: relative;
+  z-index: -1;
 }
 
 #battle-section {
@@ -142,4 +154,67 @@ li {
   text-align: center;
   -webkit-text-stroke-width: 1.6px;
   -webkit-text-stroke-color: black;
+  padding-top: 1em;
+}
+
+footer {
+  width: 100%;
+  height: 2.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  background-color: rgba(255, 255, 255, 0.32);
+  color: rgb(0, 0, 0);
+  border-top: 1px solid black;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 15px;
+  font-weight: 600;
+  -webkit-text-stroke-width: 0.3px;
+  -webkit-text-stroke-color: rgba(255, 255, 255, 0.58);
+}
+
+/* Phone */
+/* Portrait */
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
+  .main-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-areas:
+      "one"
+      "battle"
+      "two";
+  }
+
+  .header {
+    font-size: 40px;
+    text-align: center;
+  }
+
+  .sprite-img {
+    height: 200px;
+    width: 200px;
+  }
+
+  #battle-section {
+    margin-bottom: 5em;
+    margin-top: -5em;
+  }
+
+  li {
+    font-size: 20px;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+  }
+
+  .pokedex {
+    height: 80px;
+    width: 80px;
+  }
+
+  footer {
+    font-size: 10px;
+    -webkit-text-stroke-width: 0px;
+    -webkit-text-stroke-color: rgba(255, 255, 255, 0.58);
+  }
 }
